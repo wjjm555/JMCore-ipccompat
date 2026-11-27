@@ -29,6 +29,10 @@ android {
         buildConfig true
     }
 
+    publishing {
+        singleVariant("release")
+    }
+
     testOptions {
         unitTests {
             returnDefaultValues = true
