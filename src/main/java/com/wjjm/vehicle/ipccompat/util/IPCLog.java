@@ -1,5 +1,6 @@
 package com.wjjm.vehicle.ipccompat.util;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,7 @@ public class IPCLog {
      */
     private static volatile boolean registered;
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag") //RECEIVER_EXPORTED 在 API 33 才可用,低版本分支无法携带 flag
     public static void init() {
         if (registered) return;
         synchronized (IPCLog.class) {
@@ -27,7 +29,7 @@ public class IPCLog {
                 IntentFilter filter = new IntentFilter();
                 filter.addAction(ACTION);
                 Context context = ContextManager.getContext();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     context.registerReceiver(new IPCLogBroadcastReceiver(), filter, Context.RECEIVER_EXPORTED);
                 } else {
                     context.registerReceiver(new IPCLogBroadcastReceiver(), filter);
