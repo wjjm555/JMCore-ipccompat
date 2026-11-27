@@ -1,10 +1,10 @@
-# WJCore · ipccompat
+# JMCore · ipccompat
 
 English | [中文](README.md)
 
 ## 1. The Series
 
-**WJCore** is a series of open-source Android/Java framework libraries sharing the `com.wjjm.vehicle` namespace, all released under the Apache License 2.0. Each module in the series has a single responsibility and low coupling, and can be referenced independently.
+**JMCore** is a series of open-source Android/Java framework libraries sharing the `com.wjjm.vehicle` namespace, all released under the Apache License 2.0. Each module in the series has a single responsibility and low coupling, and can be referenced independently.
 
 | Module | Description |
 | --- | --- |

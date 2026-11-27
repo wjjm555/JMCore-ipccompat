@@ -1,10 +1,10 @@
-# WJCore · ipccompat
+# JMCore · ipccompat
 
 [English](README_EN.md) | 中文
 
 ## 一、系列介绍
 
-**WJCore** 是一系列面向 Android / Java 的开源框架库,统一使用 `com.wjjm.vehicle` 命名空间,全部采用 Apache License 2.0 协议发布。系列内模块职责单一、低耦合,可按需单独引用。
+**JMCore** 是一系列面向 Android / Java 的开源框架库,统一使用 `com.wjjm.vehicle` 命名空间,全部采用 Apache License 2.0 协议发布。系列内模块职责单一、低耦合,可按需单独引用。
 
 | 模块 | 说明 |
 | --- | --- |

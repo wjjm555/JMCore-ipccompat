@@ -58,7 +58,7 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
                 groupId = 'com.github.wjjm555'
-                artifactId = 'WJCore-ipccompat'
+                artifactId = 'JMCore-ipccompat'
                 version = '1.0.0'
             }
         }
