@@ -131,6 +131,9 @@ public class IPCBase implements IPCReflect {
             } catch (IllegalAccessException | InvocationTargetException e) {
                 //把业务异常作为返回值带回，调用方可以区分成功与失败，不再静默吞掉
                 return reflectException(e);
+            } catch (IllegalArgumentException e) {
+                //返回值类型不受 Binder 支持：同样作为异常带回，避免服务进程崩溃
+                return reflectException(e);
             }
         }
 
@@ -278,6 +281,9 @@ public class IPCBase implements IPCReflect {
                 return new MessageBean.Builder().setReturn(object).build();
             } catch (IllegalAccessException | InvocationTargetException e) {
                 return reflectException(e);
+            } catch (IllegalArgumentException e) {
+                //返回值类型不受 Binder 支持：同样作为异常带回，避免服务进程崩溃
+                return reflectException(e);
             }
         }
 
@@ -294,9 +300,16 @@ public class IPCBase implements IPCReflect {
         if (method == null) {
             try {
                 method = clazz.getDeclaredMethod(methodName, parameterTypes);
+            } catch (NoSuchMethodException ignore) {
+                //实现类从基类继承方法时未在本类声明，回退查找公开继承方法
+                try {
+                    method = clazz.getMethod(methodName, parameterTypes);
+                } catch (NoSuchMethodException ignore2) {
+                }
+            }
+            if (method != null) {
                 method.setAccessible(true);
                 methodCache.put(key, method);
-            } catch (NoSuchMethodException ignore) {
             }
         }
         return method;

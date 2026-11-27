@@ -82,6 +82,17 @@ The behaviors below are **by-design mechanisms, not defects**. Make sure they fi
 
 #### 1.1 Client initialization
 
+Calling `ContextManager.init(this)` in `Application.onCreate` is recommended (without it the framework falls back to reflection; if that also fails, the first use throws an `IllegalStateException` with a hint):
+
+```java
+public class MyApplication extends Application {
+    @Override public void onCreate() {
+        super.onCreate();
+        ContextManager.init(this);
+    }
+}
+```
+
 ```java
 IPCClient client = new IPCClient() {
     @Override
@@ -103,6 +114,8 @@ IPCClient client = new IPCClient() {
     android:enabled="true"
     android:exported="true" />
 ```
+
+> If foreground keep-alive is needed (the service is started via `startService` / `startForegroundService`): API 28+ requires the `FOREGROUND_SERVICE` permission; targetSdk 34+ additionally requires `android:foregroundServiceType` (e.g. `dataSync`), otherwise `startForeground` throws `MissingForegroundServiceTypeException`. Bind-only usage (bindService) is unaffected.
 
 ```java
 public class MyService extends IPCService {

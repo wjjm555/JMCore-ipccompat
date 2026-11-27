@@ -342,6 +342,11 @@ public abstract class IPCService extends Service implements ExceptionListener, I
             NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             manager.createNotificationChannel(notificationChannel);
             startForeground(1, new Notification.Builder(this, getChannelID()).setSmallIcon(android.R.drawable.ic_dialog_info).build());
+        } else {
+            //API 24-25 无 NotificationChannel，直接以前台服务启动
+            @SuppressWarnings("deprecation")
+            Notification notification = new Notification();
+            startForeground(1, notification);
         }
     }
 

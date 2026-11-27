@@ -82,6 +82,17 @@ ipccompat 封装了 Android AIDL 跨进程通信,特点如下:
 
 #### 1.1 客户端初始化
 
+推荐在 `Application.onCreate` 中调用 `ContextManager.init(this)` 显式初始化上下文(不调用时框架会通过反射兜底获取,兜底失败时首次使用会抛出带提示的 `IllegalStateException`):
+
+```java
+public class MyApplication extends Application {
+    @Override public void onCreate() {
+        super.onCreate();
+        ContextManager.init(this);
+    }
+}
+```
+
 ```java
 IPCClient client = new IPCClient() {
     @Override
@@ -103,6 +114,8 @@ IPCClient client = new IPCClient() {
     android:enabled="true"
     android:exported="true" />
 ```
+
+> 若需要前台服务保活(服务被 `startService` / `startForegroundService` 拉起):API 28+ 需声明 `FOREGROUND_SERVICE` 权限;targetSdk 34+ 还需声明 `android:foregroundServiceType`(如 `dataSync`),否则 `startForeground` 会抛 `MissingForegroundServiceTypeException`。仅绑定使用(bindService)不受影响。
 
 ```java
 public class MyService extends IPCService {
